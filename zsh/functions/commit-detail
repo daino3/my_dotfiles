@@ -1,0 +1,4 @@
+# show n # of commits ago commit detail
+function show_com() {
+  git log -n "$@" --pretty=format:%H | tail -1 | git show
+}

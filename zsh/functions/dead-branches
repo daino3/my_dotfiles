@@ -1,0 +1,4 @@
+# Delete branches matches a certain regex pattern
+function delete_dead_branches() {
+  for branch in `git branch`; do if (echo $branch | grep -E 'origin'); then git branch -D $branch; else echo 'no match'; fi ; done
+}

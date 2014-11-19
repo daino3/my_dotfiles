@@ -1,0 +1,54 @@
+### Vim shortcuts and how to's
+
+
+### Keystrokes
+
+### Navigation
+<cntl ^> Move to beginning of line
+<cntl $> Move to end of line
+b - back word
+B - Move back one word
+e - end of word
+h, j, k, l - left, down, up, right
+f - find next character in current line (i.e. fb ~> find next 'b')
+t - same as 'f' but goes backwards (i.e tb ~> find previous 'b')
+
+### Insertion Mode
+i - enter insertion mode before current character
+p - put buffer after cursor
+r - replace single character at cursor
+s - substiture single character with new text
+
+a - enter insertion mode after current character
+A - enter insertion mode after the end of the line
+
+### Copy / Paste
+y - copy line
+yiw - yank inner word
+p - paste to line below
+P - create new line above and paste
+
+### Unbound keys
+g, q, v, K
+
+
+### Marks
+m - mark position under cursor
+'' - jump back to marked position
+
+
+### Change color schemes
+:colorschemes [TAB] # lists all
+
+
+### view all current key mappings
+:nmap #normal mode
+:vmap #visial mode
+:imap #insert mode
+
+
+### Move tabs
+:tabn # next tab
+:tabp # previous tab
+
+

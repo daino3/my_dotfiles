@@ -12,18 +12,38 @@ alias -g L='| wc -l'
 alias -g ONE="| awk '{ print \$1}'"
 alias e="$EDITOR"
 alias v="$VISUAL"
+alias b='bundle exec'
+alias subl='sublime'
+alias cdwp='cd /Applications/MAMP/htdocs'
 
-# git
-alias gci="git pull --rebase && rake && git push"
+# Zeus preloader
+alias zi='zeus init'
+alias zs='zeus start'
+alias zt='zeus test'
+alias zr='zeus rake'
 
-# Bundler
-alias b="bundle"
+# Easy common file navigation
+alias cdtda='cd ~/Programs/tasty_trade/tda_trade_lab'
+alias cdpm='cd ~/Programs/tasty_trade/Podcast-Manager'
+alias cdtt='cd ~/Programs/tasty_trade/tastytrade_v2'
+alias cdauth='cd ~/Programs/tasty_trade/dough-unified-credentials'
+alias cdlib='cd ~/Programs/tasty_trade/tastytrade-lib'
+alias cdsp='cd ~/Programs/stock_picker'
+alias cdfw='cd ~/Programs/tasty_trade/filming-waivers'
+alias cdttios='cd ~/Programs/tasty_trade/tastytrade_ios'
+alias cdyf="cd ~/Programs/yahoo-finance"
+alias cdblog="cd ~/Programs/blogger"
 
-# Tests and Specs
-alias t="ruby -I test"
+# Git
+alias ga='git add'
+alias gst="git status"
+alias gc="git commit"
+alias gl="git log"
+
+# kill xcode (awesome when it hangs)
+alias killxc="kill $(ps aux | grep 'Xcode' | awk '{print $2}')"
 
 # Rails
-alias migrate="rake db:migrate db:rollback && rake db:migrate"
 alias m="migrate"
 alias rk="rake"
 alias s="rspec"

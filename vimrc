@@ -5,6 +5,7 @@ set nocompatible
 " Leader
 let mapleader = " "
 
+set shell=/bin/sh " Ensure vim always loads correct RVM
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
@@ -67,6 +68,8 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
+let g:rspec_command = "!zeus test {spec}"
+
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
 
@@ -83,7 +86,7 @@ if executable('ag')
 endif
 
 " Color scheme
-colorscheme github
+colorscheme distinguished
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
@@ -92,7 +95,7 @@ set textwidth=80
 set colorcolumn=+1
 
 " Numbers
-set number
+set relativenumber
 set numberwidth=5
 
 " Tab completion
@@ -115,15 +118,24 @@ let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
+map <D-S-]> gt
+map <D-S-[> gT
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
-" Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
+" switch tabs
+map <C-[> :tabn <Enter>
+map <C-]> :tabp <Enter>
+
+" bind F to grep word under cursor
+nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" pwd of current file
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+" view / edit selected file
+map <leader>e :edit %%
+map <leader>v :view %%
 
 " vim-rspec mappings
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
@@ -140,11 +152,34 @@ let g:html_indent_tags = 'li\|p'
 set splitbelow
 set splitright
 
-" Quicker window movement
+" Quicker window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+
+nnoremap <S-j> 10j
+nnoremap <S-k> 10k
+
+" :help window-moving
+" Quicker window placement / Get off my lawn
+nnoremap <Leader><Left> <C-w>H
+nnoremap <Leader><Right> <C-w>L
+nnoremap <Leader><Up> <C-w>K
+nnoremap <Leader><Down> <C-w>J
+
+" :help window-size
+" Quicker window resizing
+if bufwinnr(1)
+  map + 15<C-w>> " bigger
+  map _ 15<C-w>< " smaller
+  map } :res +10 <Enter> " shorter
+  map { :res -10 <Enter> " taller
+endif
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1

@@ -1,0 +1,6 @@
+# start mongo server with prompted password
+
+function mongo() {
+  read -s -p "Enter Password: " mypassword
+  echo $mypassword | sudo mongod --dbpath /srv/mongodb
+}
