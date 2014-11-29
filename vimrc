@@ -6,6 +6,7 @@ set nocompatible
 let mapleader = " "
 
 set shell=/bin/sh " Ensure vim always loads correct RVM
+set hlsearch      " higlight all words under cursor in file with '*'; prev use '#'
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
@@ -16,6 +17,8 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
+set wrap
+set linebreak
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -85,6 +88,9 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" bind F to grep word under cursor
+nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
 " Color scheme
 colorscheme distinguished
 highlight NonText guibg=#060606
@@ -128,8 +134,6 @@ nnoremap <leader><leader> <c-^>
 map <C-[> :tabn <Enter>
 map <C-]> :tabp <Enter>
 
-" bind F to grep word under cursor
-nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " pwd of current file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -167,6 +171,9 @@ nnoremap <Leader><Left> <C-w>H
 nnoremap <Leader><Right> <C-w>L
 nnoremap <Leader><Up> <C-w>K
 nnoremap <Leader><Down> <C-w>J
+
+" Better copy pasting
+nnoremap <Leader>p viw"0p
 
 " :help window-size
 " Quicker window resizing

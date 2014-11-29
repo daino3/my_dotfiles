@@ -38,7 +38,12 @@ alias cdblog="cd ~/Programs/blogger"
 alias ga='git add'
 alias gst="git status"
 alias gc="git commit"
+alias gb="git branch"
 alias gl="git log"
+alias gpull="VAR=`git rev-parse --abbrev-ref HEAD`; git pull origin $VAR"
+alias gpullr="git pull --rebase origin master"
+alias gpush="VAR=`git rev-parse --abbrev-ref HEAD`; git push origin $VAR"
+alias gco="git checkout"
 
 # kill xcode (awesome when it hangs)
 alias killxc="kill $(ps aux | grep 'Xcode' | awk '{print $2}')"
