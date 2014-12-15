@@ -1,3 +1,6 @@
+[user]
+  name = daino3
+  email = dainovu3@gmail.com
 [init]
   templatedir = ~/.git_template
 [push]
