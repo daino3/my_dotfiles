@@ -12,3 +12,5 @@ if filereadable($HOME . "/.gvimrc.local")
   source ~/.gvimrc.local
 endif
 
+" font
+set guifont=Monaco:h50

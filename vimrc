@@ -20,17 +20,24 @@ set autowrite     " Automatically :write before running commands
 set wrap
 set linebreak
 
+
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
 endif
 
-if filereadable(expand("~/.vimrc.bundles"))
+if filereadable(expand('~/.vimrc.bundles'))
   source ~/.vimrc.bundles
 endif
 
 filetype plugin indent on
+
 
 augroup vimrcEx
   autocmd!
@@ -64,14 +71,16 @@ augroup vimrcEx
   " Allow stylesheets to autocomplete hyphenated words
   autocmd FileType css,scss,sass setlocal iskeyword+=-
 augroup END
-
+" set js syntax highlighting for json files
+autocmd BufNewFile,BufRead *.json set ft=javascript
 " Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
 set shiftround
 set expandtab
 
-let g:rspec_command = "!zeus test {spec}"
+let g:rspec_command = "!zeus test {spec} "
+" let g:rspec_command = "!bundle exec rspec {spec} "
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
@@ -88,8 +97,20 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" bind \ (backward slash) to grep shortcut
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>
 " bind F to grep word under cursor
 nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" open c-window
+nnoremap <Leader>C :copen <Enter>
+
+" bind E to Explorer mode
+nnoremap <Leader>E :Explore<CR>
+
+" Save current file
+nnoremap <Leader>w :update<CR>
 
 " Color scheme
 colorscheme distinguished
@@ -177,12 +198,13 @@ nnoremap <Leader>p viw"0p
 
 " :help window-size
 " Quicker window resizing
-if bufwinnr(1)
-  map + 15<C-w>> " bigger
-  map _ 15<C-w>< " smaller
-  map } :res +10 <Enter> " shorter
-  map { :res -10 <Enter> " taller
-endif
+" if bufwinnr(1)
+"  map + 15<C-w>> " bigger
+"  map _ 15<C-w>< " smaller
+"  map } :res +10 <Enter> " shorter
+"  map { :res -10 <Enter> " taller
+"endif
+nnoremap <s-right> 15<C-w>> " bigger
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
