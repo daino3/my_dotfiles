@@ -79,8 +79,9 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-let g:rspec_command = "!zeus test {spec} "
+" let g:rspec_command = "!zeus test {spec} "
 " let g:rspec_command = "!bundle exec rspec {spec} "
+let g:rspec_command = "!rspec {spec} "
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
@@ -103,6 +104,13 @@ nnoremap \ :Ag<SPACE>
 " bind F to grep word under cursor
 nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
+" buffers / tabs
+nmap <Leader>l :bnext <Enter>
+nmap <Leader>h :bprevious <Enter>
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+"
 " open c-window
 nnoremap <Leader>C :copen <Enter>
 
@@ -165,10 +173,10 @@ map <leader>v :view %%
 " vim-rspec mappings
 nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>
+" nnoremap <Leader>l :call RunLastSpec()<CR>
 
 " Run commands that require an interactive shell
-nnoremap <Leader>r :RunInInteractiveShell<space>
+" nnoremap <Leader>r :RunInInteractiveShell<space>
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
