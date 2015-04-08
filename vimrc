@@ -38,6 +38,8 @@ endif
 
 filetype plugin indent on
 
+" Remove trailing whitespace after save
+autocmd BufWritePre * :%s/\s\+$//e
 
 augroup vimrcEx
   autocmd!
@@ -79,9 +81,12 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-" let g:rspec_command = "!zeus test {spec} "
-" let g:rspec_command = "!bundle exec rspec {spec} "
-let g:rspec_command = "!rspec {spec} "
+" Control c in visual mode copies to clipboard
+vmap <C-c> :w !pbcopy
+
+" let g:rspec_command = 'call Send_to_Tmux("zeus test {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·

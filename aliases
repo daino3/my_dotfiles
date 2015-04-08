@@ -1,5 +1,5 @@
 # Unix
- 
+
 alias b='bundle exec'
 alias subl='sublime'
 alias cdwp='cd /Applications/MAMP/htdocs'
@@ -11,18 +11,20 @@ alias zt='zeus test'
 alias zr='zeus rake'
 
 # Easy common file navigation
-alias cdtda='cd ~/Programs/tasty_trade/tda_trade_lab'
-alias cdpm='cd ~/Programs/tasty_trade/Podcast-Manager'
-alias cdtt='cd ~/Programs/tasty_trade/tastytrade_v2'
-alias cdauth='cd ~/Programs/tasty_trade/dough-unified-credentials'
-alias cdlib='cd ~/Programs/tasty_trade/tastytrade-lib'
+alias cdtda='cd ~/Programs/tastytrade/tda_trade_lab'
+alias cdpm='cd ~/Programs/tastytrade/Podcast-Manager'
+alias cdtt='cd ~/Programs/tastytrade/tastytrade_v2'
+alias cdauth='cd ~/Programs/tastytrade/dough-unified-credentials'
+alias cdlib='cd ~/Programs/tastytrade/tastytrade-lib'
 alias cdsp='cd ~/Programs/stock_picker'
-alias cdfw='cd ~/Programs/tasty_trade/filming-waivers'
-alias cdttios='cd ~/Programs/tasty_trade/tastytrade_ios'
+alias cdfw='cd ~/Programs/tastytrade/filming-waivers'
+alias cdttios='cd ~/Programs/tastytrade/tastytrade_ios'
 alias cdyf="cd ~/Programs/yahoo-finance"
 alias cdblog="cd ~/Programs/blogger"
 alias cdbayes="cd ~/Programs/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers"
+alias cdts="cd ~/Programs/tastytrade/trade_stalker"
 
+# Git
 alias ga='git add'
 alias gst='git status'
 alias gc='git commit'
