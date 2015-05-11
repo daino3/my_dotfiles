@@ -82,7 +82,10 @@ set shiftround
 set expandtab
 
 " Control c in visual mode copies to clipboard
-vmap <C-c> :w !pbcopy
+vmap <C-c> :w !pbcopy <Enter>
+
+" sort css files
+:command! Sortcss :g#\({\n\)\@<=#.,/}/sort
 
 " let g:rspec_command = 'call Send_to_Tmux("zeus test {spec}\n")'
 " let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'

@@ -23,6 +23,7 @@ alias cdyf="cd ~/Programs/yahoo-finance"
 alias cdblog="cd ~/Programs/blogger"
 alias cdbayes="cd ~/Programs/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers"
 alias cdts="cd ~/Programs/tastytrade/trade_stalker"
+alias cdttr="cd ~/Programs/tastytrade/tastytrade-responsive"
 
 # Git
 alias ga='git add'
