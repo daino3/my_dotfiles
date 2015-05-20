@@ -84,6 +84,9 @@ set expandtab
 " Control c in visual mode copies to clipboard
 vmap <C-c> :w !pbcopy <Enter>
 
+" yank and paste from vim
+set clipboard=unnamed
+
 " sort css files
 :command! Sortcss :g#\({\n\)\@<=#.,/}/sort
 
