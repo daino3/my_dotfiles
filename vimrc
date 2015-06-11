@@ -5,21 +5,47 @@ set nocompatible
 " Leader
 let mapleader = " "
 
-set shell=/bin/sh " Ensure vim always loads correct RVM
-set hlsearch      " higlight all words under cursor in file with '*'; prev use '#'
-set backspace=2   " Backspace deletes like most programs in insert mode
-set nobackup
-set nowritebackup
-set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-set history=50
-set ruler         " show the cursor position all the time
-set showcmd       " display incomplete commands
-set incsearch     " do incremental searching
-set laststatus=2  " Always display the status line
-set autowrite     " Automatically :write before running commands
-set wrap
-set linebreak
+set shell=/bin/sh                       " Ensure vim always loads correct RVM
 
+set autoread                            " reload files automatically
+set autowrite                           " Automatically :write before running commands
+set backspace=2                         " Backspace deletes like most programs in insert mode
+set clipboard=unnamed                   " yank and paste from vim
+set colorcolumn=+1
+set cursorline                          " highlight current line
+set diffopt+=vertical                   " Always use vertical diffs
+set expandtab
+set history=50
+set hlsearch                            " higlight all words under cursor in file with '*'; prev use '#'
+set incsearch                           " do incremental searching
+set laststatus=2                        " Always display the status line
+set list listchars=tab:»·,trail:·,nbsp:·" Display extra whitespace
+set nobackup
+set noswapfile                          " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set nowritebackup
+set numberwidth=5                       " Numbers
+set relativenumber                      " Numbers
+set ruler                               " show the cursor position all the time
+set shiftround
+set shiftwidth=2
+set showcmd                             " display incomplete commands
+set splitbelow                          " Open new split panes to right and bottom, which feels more natural
+set splitright                          " Open new split panes to right and bottom, which feels more natural
+set tabstop=2                           " Softtabs, 2 spaces
+set textwidth=100                       " Make it obvious where 80 characters is
+set wrap
+
+" Tab completion
+" will insert tab at beginning of line,
+" will use completion if not at beginning
+set wildmode=list:longest,list:full
+
+" Set spellfile to location that is guaranteed to exist, can be symlinked to
+" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+
+" autload NERDTree when you enter Vim
+" autocmd vimenter * NERDTree
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -75,27 +101,33 @@ augroup vimrcEx
 augroup END
 " set js syntax highlighting for json files
 autocmd BufNewFile,BufRead *.json set ft=javascript
-" Softtabs, 2 spaces
-set tabstop=2
-set shiftwidth=2
-set shiftround
-set expandtab
 
 " Control c in visual mode copies to clipboard
 vmap <C-c> :w !pbcopy <Enter>
 
-" yank and paste from vim
-set clipboard=unnamed
-
 " sort css files
 :command! Sortcss :g#\({\n\)\@<=#.,/}/sort
 
-" let g:rspec_command = 'call Send_to_Tmux("zeus test {spec}\n")'
-" let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
-let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
+" format json
+:command! FormatJSON :%!python -m json.tool
 
-" Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+" Get from Gary Bernhardt -
+" https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L348
+" function! GetTestCommand()
+"   if system('pgrep zeus')
+"     return 'call Send_to_Tmux("zeus test {spec}\n")'
+"   elseif expand('%:r') =~ '_spec$'
+"     echo 'rspec'
+"     return 'call Send_to_Tmux("rspec {spec}\n")'
+"   elseif expand('%') =~ '\.feature$'
+"     return 'call Send_to_Tmux("cucumber {spec}\n")'
+"   else
+"     return 0
+"   endif
+" endfunction
+" let g:rspec_command = 'call Send_to_Tmux("zeus test {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
+" let g:rspec_command = GetTestCommand()
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -121,7 +153,7 @@ nmap <Leader>h :bprevious <Enter>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>
-"
+
 " open c-window
 nnoremap <Leader>C :copen <Enter>
 
@@ -136,18 +168,6 @@ colorscheme distinguished
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
-" Make it obvious where 80 characters is
-set textwidth=80
-set colorcolumn=+1
-
-" Numbers
-set relativenumber
-set numberwidth=5
-
-" Tab completion
-" will insert tab at beginning of line,
-" will use completion if not at beginning
-set wildmode=list:longest,list:full
 function! InsertTabWrapper()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
@@ -192,10 +212,6 @@ nnoremap <Leader>s :call RunNearestSpec()<CR>
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
-" Open new split panes to right and bottom, which feels more natural
-set splitbelow
-set splitright
-
 " Quicker window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -217,13 +233,12 @@ nnoremap <Leader>p viw"0p
 
 " :help window-size
 " Quicker window resizing
-" if bufwinnr(1)
-"  map + 15<C-w>> " bigger
-"  map _ 15<C-w>< " smaller
-"  map } :res +10 <Enter> " shorter
-"  map { :res -10 <Enter> " taller
-"endif
-nnoremap <s-right> 15<C-w>> " bigger
+if bufwinnr(1)
+ map + 15<C-w>> " bigger
+ map _ 15<C-w>< " smaller
+ map } :res +10 <Enter> " shorter
+ map { :res -10 <Enter> " taller
+endif
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -235,14 +250,6 @@ nnoremap <Leader><Enter> <S-o><Esc>
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
-" Set spellfile to location that is guaranteed to exist, can be symlinked to
-" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
-set spellfile=$HOME/.vim-spell-en.utf-8.add
-
-" Always use vertical diffs
-set diffopt+=vertical
-
 " Local config
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
