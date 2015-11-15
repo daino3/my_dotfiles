@@ -35,8 +35,8 @@ set tabstop=2                           " Softtabs, 2 spaces
 set textwidth=100                       " Make it obvious where 80 characters is
 set wrap
 set mouse=a                             " enable mouse (want this for nerdtree)
+set mousemodel=popup_setpos
 set ttymouse=xterm2
-set ttyfast
 set paste                               " dont fuck up formatting when pasting from other applications
 
 " Tab completion
@@ -57,6 +57,9 @@ nmap <leader>n :NERDTree %<CR>:wincmd p<CR>
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeMouseMode = 3
 let g:NERDTreeShowHidden = 1
+
+" copy when selecing text with mouse
+:vmap <C-C> "+y
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
