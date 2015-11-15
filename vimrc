@@ -34,6 +34,10 @@ set splitright                          " Open new split panes to right and bott
 set tabstop=2                           " Softtabs, 2 spaces
 set textwidth=100                       " Make it obvious where 80 characters is
 set wrap
+set mouse=a                         " enable mouse (want this for nerdtree)
+set mousemodel=popup_setpos
+set ttymouse=xterm2
+set paste                               " dont fuck up formatting when pasting from other applications
 
 " Tab completion
 " will insert tab at beginning of line,
@@ -45,7 +49,14 @@ set wildmode=list:longest,list:full
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 
 " autload NERDTree when you enter Vim
-" autocmd vimenter * NERDTree
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+" Shortcut for NERDTreeToggle
+nmap <leader>nt :NERDTreeToggle<CR>:wincmd p<CR>
+nmap <leader>n :NERDTree %<CR>:wincmd p<CR>
+let g:NERDTreeWinPos = "left"
+let g:NERDTreeMouseMode = 3
+let g:NERDTreeShowHidden = 1
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -102,32 +113,17 @@ augroup END
 " set js syntax highlighting for json files
 autocmd BufNewFile,BufRead *.json set ft=javascript
 
-" Control c in visual mode copies to clipboard
-vmap <C-c> :w !pbcopy <Enter>
-
 " sort css files
 :command! Sortcss :g#\({\n\)\@<=#.,/}/sort
 
 " format json
 :command! FormatJSON :%!python -m json.tool
 
-" Get from Gary Bernhardt -
-" https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L348
-" function! GetTestCommand()
-"   if system('pgrep zeus')
-"     return 'call Send_to_Tmux("zeus test {spec}\n")'
-"   elseif expand('%:r') =~ '_spec$'
-"     echo 'rspec'
-"     return 'call Send_to_Tmux("rspec {spec}\n")'
-"   elseif expand('%') =~ '\.feature$'
-"     return 'call Send_to_Tmux("cucumber {spec}\n")'
-"   else
-"     return 0
-"   endif
-" endfunction
 " let g:rspec_command = 'call Send_to_Tmux("zeus test {spec}\n")'
-let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
+" let g:rspec_command = "!rspec {spec}"
+" let g:rspec_command = 'call Send_to_Tmux("bundle exec foreman run -e test.env rspec {spec}\n")'
 " let g:rspec_command = GetTestCommand()
+nmap <Leader>t :w\|:!echo "rspec --color %" > test-commands<cr>
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -190,11 +186,6 @@ map <D-S-[> gT
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
-" switch tabs
-map <C-[> :tabn <Enter>
-map <C-]> :tabp <Enter>
-
-
 " pwd of current file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " view / edit selected file
@@ -202,8 +193,8 @@ map <leader>e :edit %%
 map <leader>v :view %%
 
 " vim-rspec mappings
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :call RunNearestSpec()<CR>
+" nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+" nnoremap <Leader>s :call RunNearestSpec()<CR>
 " nnoremap <Leader>l :call RunLastSpec()<CR>
 
 " Run commands that require an interactive shell
