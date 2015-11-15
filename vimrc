@@ -34,9 +34,9 @@ set splitright                          " Open new split panes to right and bott
 set tabstop=2                           " Softtabs, 2 spaces
 set textwidth=100                       " Make it obvious where 80 characters is
 set wrap
-set mouse=a                         " enable mouse (want this for nerdtree)
-set mousemodel=popup_setpos
+set mouse=a                             " enable mouse (want this for nerdtree)
 set ttymouse=xterm2
+set ttyfast
 set paste                               " dont fuck up formatting when pasting from other applications
 
 " Tab completion
