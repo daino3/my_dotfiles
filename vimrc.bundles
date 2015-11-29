@@ -26,11 +26,17 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'vim-scripts/tComment'
+Plugin 'godlygeek/tabular'
 " tabs like sublime
 Plugin 'bling/vim-airline'
 Plugin 'jgdavey/tslime.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'slim-template/vim-slim'
+" auto completion
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ngmy/vim-rubocop'
+" quick window of buffers
+Plugin 'jeetsukumaran/vim-buffergator'
 
 " GO
 Plugin 'fatih/vim-go'
