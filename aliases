@@ -49,3 +49,8 @@ alias s="rspec"
 
 # Vagrant
 alias vssh="vagrant ssh"
+
+# Alias vim command to use system ruby for YouCompleteMe
+# https://github.com/Valloric/YouCompleteMe/issues/151
+alias vim='rvm system do /usr/local/bin/vim $@'
+
