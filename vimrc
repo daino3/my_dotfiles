@@ -10,12 +10,12 @@ set shell=/bin/sh                       " Ensure vim always loads correct RVM
 set autoread                            " reload files automatically
 set autowrite                           " Automatically :write before running commands
 set backspace=2                         " Backspace deletes like most programs in insert mode
-set clipboard=unnamed                   " yank and paste from vim
+set clipboard+=unnamed                  " yank and paste from vim
 set colorcolumn=+1
 set cursorline                          " highlight current line
 set diffopt+=vertical                   " Always use vertical diffs
 set expandtab
-set history=50
+set history=1000
 set hlsearch                            " higlight all words under cursor in file with '*'; prev use '#'
 set incsearch                           " do incremental searching
 set laststatus=2                        " Always display the status line
@@ -37,7 +37,19 @@ set wrap
 set mouse=a                             " enable mouse (want this for nerdtree)
 set mousemodel=popup_setpos
 set ttymouse=xterm2
-set paste                               " dont fuck up formatting when pasting from other applications
+set hidden                              " allow vim to hide buffers w/ unsaved changes
+" set spell                               " spellchecking
+set autoread                            " detect changes and autoload (e.g. from Sublime)
+
+" toggle paste w/ 0 key to not fuck up formatting when pasting from other applications
+" must toggle for YouCompleteMe - http://stackoverflow.com/questions/28304137/youcompleteme-works-but-can-not-complete-using-tab
+set pastetoggle=<0>
+
+" paste from system clipboard
+nmap <leader>v "+p
+
+" Hit enter to not highlight search results
+:nnoremap <CR> :nohlsearch<cr>
 
 " Tab completion
 " will insert tab at beginning of line,
@@ -60,6 +72,9 @@ let g:NERDTreeShowHidden = 1
 
 " copy when selecing text with mouse
 :vmap <C-C> "+y
+
+" set indenting on for cucumber
+filetype plugin indent on
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -122,6 +137,10 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 " format json
 :command! FormatJSON :%!python -m json.tool
 
+" vim-rspec mappings
+" nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+" nnoremap <Leader>s :call RunNearestSpec()<CR>
+" nnoremap <Leader>l :call RunLastSpec()<CR>
 " let g:rspec_command = 'call Send_to_Tmux("zeus test {spec}\n")'
 " let g:rspec_command = "!rspec {spec}"
 " let g:rspec_command = 'call Send_to_Tmux("bundle exec foreman run -e test.env rspec {spec}\n")'
@@ -143,12 +162,12 @@ endif
 " bind \ (backward slash) to grep shortcut
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
-" bind F to grep word under cursor
-nnoremap F :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " buffers / tabs
 nmap <Leader>l :bnext <Enter>
 nmap <Leader>h :bprevious <Enter>
+nmap <Leader>H :bfirst <Enter>
+nmap <Leader>L :blast <Enter>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>
@@ -167,17 +186,6 @@ colorscheme distinguished
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
-
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
@@ -191,17 +199,6 @@ nnoremap <leader><leader> <c-^>
 
 " pwd of current file
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
-" view / edit selected file
-map <leader>e :edit %%
-map <leader>v :view %%
-
-" vim-rspec mappings
-" nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
-" nnoremap <Leader>s :call RunNearestSpec()<CR>
-" nnoremap <Leader>l :call RunLastSpec()<CR>
-
-" Run commands that require an interactive shell
-" nnoremap <Leader>r :RunInInteractiveShell<space>
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -212,8 +209,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-nnoremap <S-j> 10j
-nnoremap <S-k> 10k
+nmap <Up> 10k
+nmap <Down> 10j
 
 " :help window-moving
 " Quicker window placement / Get off my lawn
@@ -224,15 +221,6 @@ nnoremap <Leader><Down> <C-w>J
 
 " Better copy pasting
 nnoremap <Leader>p viw"0p
-
-" :help window-size
-" Quicker window resizing
-if bufwinnr(1)
- map + 15<C-w>> " bigger
- map _ 15<C-w>< " smaller
- map } :res +10 <Enter> " shorter
- map { :res -10 <Enter> " taller
-endif
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -248,3 +236,18 @@ let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
+
+" Tabularize on insert mode (for cucumber) http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
