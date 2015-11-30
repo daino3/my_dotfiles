@@ -251,3 +251,23 @@ function! s:align()
   endif
 endfunction
 
+" Override */# behavior to search for selected text in visual mode forward/backward
+" Page 213 Practical Vim
+xnoremap * :<C-u>call <SID>VSetSearch()<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch()<CR>?<C-R>=@/<CR><CR>
+
+function! s:VSetSearch()
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, '/|'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
+
+" Make &, alias for :s, A.K.A repeat last substitution behave more predictably
+" Page 227 Practical Vim
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+" Use perl/ruby - like regex vs. Vim's more posix-style regexp
+nnoremap / /\v
+
