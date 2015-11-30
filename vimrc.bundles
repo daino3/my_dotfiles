@@ -37,6 +37,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'ngmy/vim-rubocop'
 " quick window of buffers
 Plugin 'jeetsukumaran/vim-buffergator'
+" Coercion of snake_case, camelCase, and better 'swap'
+Plugin 'tpope/vim-abolish'
 
 " GO
 Plugin 'fatih/vim-go'
