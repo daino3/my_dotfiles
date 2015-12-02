@@ -32,7 +32,7 @@ set showcmd                             " display incomplete commands
 set splitbelow                          " Open new split panes to right and bottom, which feels more natural
 set splitright                          " Open new split panes to right and bottom, which feels more natural
 set tabstop=2                           " Softtabs, 2 spaces
-set textwidth=100                       " Make it obvious where 80 characters is
+set textwidth=120                       " Make it obvious where 80 characters is
 set wrap
 set mouse=a                             " enable mouse (want this for nerdtree)
 set mousemodel=popup_setpos
