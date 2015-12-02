@@ -164,19 +164,15 @@ command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
 
 " buffers / tabs
-nmap <Leader>l :bnext <Enter>
-nmap <Leader>h :bprevious <Enter>
-nmap <Leader>H :bfirst <Enter>
-nmap <Leader>L :blast <Enter>
+nmap <C-h> :bprevious <Enter>
+nmap <C-l> :bnext <Enter>
+
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>
 
 " open c-window
 nnoremap <Leader>C :copen <Enter>
-
-" bind E to Explorer mode
-nnoremap <Leader>E :Explore<CR>
 
 " Save current file
 nnoremap <Leader>w :update<CR>
@@ -202,22 +198,6 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
-" Quicker window navigation
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
-nmap <Up> 10k
-nmap <Down> 10j
-
-" :help window-moving
-" Quicker window placement / Get off my lawn
-nnoremap <Leader><Left> <C-w>H
-nnoremap <Leader><Right> <C-w>L
-nnoremap <Leader><Up> <C-w>K
-nnoremap <Leader><Down> <C-w>J
 
 " Better copy pasting
 nnoremap <Leader>p viw"0p
