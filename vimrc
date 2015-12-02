@@ -251,3 +251,15 @@ xnoremap & :&&<CR>
 " Use perl/ruby - like regex vs. Vim's more posix-style regexp
 nnoremap / /\v
 
+" Populate argslist with items in the quickfix menu. Helpful for
+" running substitute commands using vimgrep to find a list of files in the
+" current directory that have a match of the search vs. all files
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+
+function! QuickfixFilenames()
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
