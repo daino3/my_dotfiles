@@ -48,8 +48,8 @@ set pastetoggle=<0>
 " paste from system clipboard
 nmap <leader>v "+p
 
-" Hit enter to not highlight search results
-:nnoremap <CR> :nohlsearch<cr>
+" Hit enter to not highlight search results; extra enter @ beginning for ctrl-p
+:nnoremap <CR> <cr>k:nohlsearch<cr>
 
 " Tab completion
 " will insert tab at beginning of line,
